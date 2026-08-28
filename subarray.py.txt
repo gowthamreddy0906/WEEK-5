@@ -1,0 +1,75 @@
+SUB-Array Division:
+
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+
+    public static int birthday(List<Integer> s, int d, int m) {
+        int count = 0;
+        int sum = 0;
+
+        // If there aren't enough elements
+        if (s.size() < m) {
+            return 0;
+        }
+
+        // First window
+        for (int i = 0; i < m; i++) {
+            sum += s.get(i);
+        }
+
+        if (sum == d) {
+            count++;
+        }
+
+        // Sliding window
+        for (int i = m; i < s.size(); i++) {
+            sum += s.get(i);
+            sum -= s.get(i - m);
+
+            if (sum == d) {
+                count++;
+            }
+        }
+
+        return count;
+    }
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(
+            new InputStreamReader(System.in)
+        );
+
+        int n = Integer.parseInt(bufferedReader.readLine().trim());
+
+        String[] sTemp = bufferedReader.readLine().split(" ");
+        List<Integer> s = new ArrayList<>();
+
+        for (int i = 0; i < n; i++) {
+            s.add(Integer.parseInt(sTemp[i]));
+        }
+
+        String[] dm = bufferedReader.readLine().split(" ");
+
+        int d = Integer.parseInt(dm[0]);
+        int m = Integer.parseInt(dm[1]);
+
+        int result = birthday(s, d, m);
+
+        System.out.println(result);
+
+        bufferedReader.close();
+    }
+}
+
+
+output:
+Input (stdin)
+5
+1 2 1 3 2
+3 2
+Your Output (stdout)
+2
+Expected Output
+2
